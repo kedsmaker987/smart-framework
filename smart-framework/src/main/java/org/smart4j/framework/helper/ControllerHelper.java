@@ -7,9 +7,13 @@ import java.util.Set;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.smart4j.framework.annotation.Action;
 import org.smart4j.framework.bean.Handler;
 import org.smart4j.framework.bean.Request;
+
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 控制器助手类
@@ -22,6 +26,7 @@ public final class ControllerHelper {
 	 * 存放请求和处理器之间关系
 	 */
 	private static final Map<Request,Handler> ACTION_MAP = new HashMap<Request,Handler>();
+	private static final Logger logger = LoggerFactory.getLogger(ControllerHelper.class);
 	
 	static{
 		// 获取所有controller.class 类
@@ -67,6 +72,7 @@ public final class ControllerHelper {
 	 * @return
 	 */
 	public static Handler getHandler(String requestMethod,String requestPath){
+		logger.info("ACTION_MAP "+JSONObject.toJSONString(ACTION_MAP));
 		Request request = new Request(requestMethod,requestPath);
 		return ACTION_MAP.get(request);
 	}

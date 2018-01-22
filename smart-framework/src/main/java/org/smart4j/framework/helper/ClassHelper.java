@@ -39,7 +39,7 @@ public class ClassHelper {
 	 */
 	public static Set<Class<?>> getServiceClassSet(){
 		Set<Class<?>> classSet = new HashSet<Class<?>>();
-		for(Class<?> cls: classSet){
+		for(Class<?> cls: CLASS_SET){
 			if(cls.isAnnotationPresent(Service.class)){
 				classSet.add(cls);
 			}
@@ -53,7 +53,7 @@ public class ClassHelper {
 	 */
 	public static Set<Class<?>> getControllerClassSet(){
 		Set<Class<?>> classSet = new HashSet<Class<?>>();
-		for(Class<?> cls: classSet){
+		for(Class<?> cls: CLASS_SET){
 			if(cls.isAnnotationPresent(Controller.class)){
 				classSet.add(cls);
 			}
