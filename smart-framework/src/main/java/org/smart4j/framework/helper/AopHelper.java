@@ -14,6 +14,7 @@ import org.smart4j.framework.annotation.Aspect;
 import org.smart4j.framework.proxy.AspectProxy;
 import org.smart4j.framework.proxy.Proxy;
 import org.smart4j.framework.proxy.ProxyManager;
+import org.smart4j.framework.util.JsonUtil;
 
 public class AopHelper {
 	
@@ -23,7 +24,7 @@ public class AopHelper {
 		try{
 			Map<Class<?>,Set<Class<?>>> proxyMap = createProxyMap();
 			Map<Class<?>,List<Proxy>> targetMap = createTargetMap(proxyMap);
-			
+			logger.info("targetmap "+JsonUtil.toJson(targetMap));
 			for(Map.Entry<Class<?>, List<Proxy>> targetEntry:targetMap.entrySet()){
 				Class<?> targetClass = targetEntry.getKey();
 				List<Proxy> proxyList = targetEntry.getValue();
