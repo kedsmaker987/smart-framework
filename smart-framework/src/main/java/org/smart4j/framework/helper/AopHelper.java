@@ -11,9 +11,11 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smart4j.framework.annotation.Aspect;
+import org.smart4j.framework.annotation.Service;
 import org.smart4j.framework.proxy.AspectProxy;
 import org.smart4j.framework.proxy.Proxy;
 import org.smart4j.framework.proxy.ProxyManager;
+import org.smart4j.framework.proxy.TransactionProxy;
 import org.smart4j.framework.util.JsonUtil;
 
 public class AopHelper {
@@ -24,7 +26,6 @@ public class AopHelper {
 		try{
 			Map<Class<?>,Set<Class<?>>> proxyMap = createProxyMap();
 			Map<Class<?>,List<Proxy>> targetMap = createTargetMap(proxyMap);
-			logger.info("targetmap "+JsonUtil.toJson(targetMap));
 			for(Map.Entry<Class<?>, List<Proxy>> targetEntry:targetMap.entrySet()){
 				Class<?> targetClass = targetEntry.getKey();
 				List<Proxy> proxyList = targetEntry.getValue();
@@ -44,6 +45,18 @@ public class AopHelper {
 		// 代理类和@aspect value 对应目标类集合之间的对应关系
 		Map<Class<?>,Set<Class<?>>> proxyMap = new HashMap<Class<?>,Set<Class<?>>>();
 		// 切面代理类
+		addAspectProxy(proxyMap);
+		// 事物代理类
+		addTransactionProxy(proxyMap);
+		return proxyMap;
+	}
+
+	private static void addTransactionProxy(Map<Class<?>, Set<Class<?>>> proxyMap) {
+		Set<Class<?>> serverClassSet = ClassHelper.getClassSetByAnnotation(Service.class);
+		proxyMap.put(TransactionProxy.class, serverClassSet);
+	}
+
+	private static void addAspectProxy(Map<Class<?>, Set<Class<?>>> proxyMap) {
 		Set<Class<?>> proxyClassSet = ClassHelper.getClassSetBySuper(AspectProxy.class);
 		for(Class<?> proxyClass:proxyClassSet){
 			// 代理类上有aspect 的标签
@@ -53,7 +66,6 @@ public class AopHelper {
 				proxyMap.put(proxyClass, targetClassSet);
 			}
 		}
-		return proxyMap;
 	}
 
 	private static Set<Class<?>> createTargetClassSet(Aspect aspect) {
@@ -83,4 +95,5 @@ public class AopHelper {
 		}
 		return targetMap;
 	}
+	
 }

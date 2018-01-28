@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.smart4j.framework.util.ReflectionUtil;
 
 /**
@@ -16,6 +18,8 @@ public class BeanHelper {
 	 * Bean 类的映射(Bean 和Bean实例之间的映射关系)
 	 */
 	private static final Map<Class<?>, Object> BEAN_MAP = new HashMap<Class<?>,Object>();
+	
+	private static final Logger logger = LoggerFactory.getLogger(BeanHelper.class);
 	
 	static{
 		Set<Class<?>> beanClassSet = ClassHelper.getBeanClassSet();
@@ -30,6 +34,7 @@ public class BeanHelper {
 	 * @return
 	 */
 	public static Map<Class<?>,Object> getBeanMap(){
+		logger.info("BEAN_MAP : "+BEAN_MAP);
 		return BEAN_MAP;
 	}
 	
