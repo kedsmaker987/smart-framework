@@ -1,4 +1,4 @@
-package org.smart4j.framework.util;
+package org.smart4j.framework.proxy;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
