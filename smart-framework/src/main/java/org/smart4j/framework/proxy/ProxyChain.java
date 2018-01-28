@@ -17,13 +17,14 @@ public class ProxyChain {
 	private int proxyIndex = 0;
 	private List<Proxy> proxyList = new ArrayList<Proxy>();
 	public ProxyChain(Class<?> targetClass, Object targetObject, Method targetMethod, MethodProxy methodProxy,
-			Object[] methodParams) {
+			Object[] methodParams,List<Proxy> proxyList) {
 		super();
 		this.targetClass = targetClass;
 		this.targetObject = targetObject;
 		this.targetMethod = targetMethod;
 		this.methodProxy = methodProxy;
 		this.methodParams = methodParams;
+		this.proxyList = proxyList;
 	}
 	public Class<?> getTargetClass() {
 		return targetClass;

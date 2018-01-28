@@ -58,7 +58,6 @@ public abstract class AspectProxy implements Proxy{
 	}
 
 	private void begin() {
-		// TODO Auto-generated method stub
 		
 	}
 }
