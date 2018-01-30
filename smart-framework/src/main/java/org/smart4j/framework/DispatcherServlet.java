@@ -27,6 +27,7 @@ import org.smart4j.framework.helper.ConfigHelper;
 import org.smart4j.framework.helper.ControllerHelper;
 import org.smart4j.framework.helper.HelperLoader;
 import org.smart4j.framework.helper.RequestHelper;
+import org.smart4j.framework.helper.ServletHelper;
 import org.smart4j.framework.helper.UploadHelper;
 import org.smart4j.framework.util.CodecUtil;
 import org.smart4j.framework.util.JsonUtil;
@@ -56,6 +57,10 @@ public class DispatcherServlet extends HttpServlet{
 	
 	public void service(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException{
 		// 获取请求方法和路径
+		ServletHelper.init(request, response);
+		try{
+			
+		
 		String requestMethod = request.getMethod().toLowerCase();
 		String requestPath = request.getPathInfo();
 		
@@ -91,6 +96,11 @@ public class DispatcherServlet extends HttpServlet{
 			}else if(result instanceof Data){// 返回json 数据
 				handleDataResult(response, (Data)result);
 			}
+		}
+		}catch(Exception e){
+			
+		}finally{
+			ServletHelper.destory();
 		}
 	}
 
